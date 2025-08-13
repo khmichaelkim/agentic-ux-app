@@ -18,7 +18,7 @@ import {
 // Import our dashboard widgets
 import { ServiceHealthOverview } from "@/components/dashboard/service-health-overview";
 import { SLOStatusDashboard } from "@/components/dashboard/slo-status-dashboard";
-import { ServiceDependencyMap } from "@/components/dashboard/service-dependency-map";
+import { InteractiveServiceMap } from "@/components/dashboard/interactive/interactive-service-map";
 import { RealTimeMetricsChart } from "@/components/dashboard/real-time-metrics-chart";
 import { AlertStatusFeed } from "@/components/dashboard/alert-status-feed";
 
@@ -152,7 +152,7 @@ export default function Home() {
             className="grid grid-cols-1 xl:grid-cols-2 gap-8"
           >
             <SLOStatusDashboard />
-            <ServiceDependencyMap />
+            <InteractiveServiceMap />
           </motion.div>
           
           {/* Row 3: Real-time Metrics (Full Width) */}

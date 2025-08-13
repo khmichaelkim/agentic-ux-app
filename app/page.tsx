@@ -1,103 +1,189 @@
-import Image from "next/image";
+"use client";
+
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { 
+  RefreshCw, 
+  Settings, 
+  Bell, 
+  User,
+  Activity,
+  Cloud,
+  Shield,
+  Zap
+} from "lucide-react";
+
+// Import our dashboard widgets
+import { ServiceHealthOverview } from "@/components/dashboard/service-health-overview";
+import { SLOStatusDashboard } from "@/components/dashboard/slo-status-dashboard";
+import { ServiceDependencyMap } from "@/components/dashboard/service-dependency-map";
+import { RealTimeMetricsChart } from "@/components/dashboard/real-time-metrics-chart";
+import { AlertStatusFeed } from "@/components/dashboard/alert-status-feed";
+
+const Header = () => {
+  return (
+    <motion.header
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="border-b border-border/50 bg-background/80 backdrop-blur-sm sticky top-0 z-50"
+    >
+      <div className="container mx-auto px-6 py-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="p-2 rounded-lg bg-primary/10"
+            >
+              <Cloud className="h-6 w-6 text-primary" />
+            </motion.div>
+            <div>
+              <h1 className="text-xl font-semibold">AWS Observability Console</h1>
+              <p className="text-sm text-muted-foreground">
+                Real-time monitoring and service insights
+              </p>
+            </div>
+          </div>
+          
+          <div className="flex items-center gap-3">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.3 }}
+              className="flex items-center gap-2"
+            >
+              <Badge variant="secondary" className="text-xs">
+                <Activity className="h-3 w-3 mr-1" />
+                Live
+              </Badge>
+              <Badge variant="outline" className="text-xs">
+                Region: us-east-1
+              </Badge>
+            </motion.div>
+            
+            <Separator orientation="vertical" className="h-6" />
+            
+            <div className="flex items-center gap-1">
+              <Button variant="ghost" size="sm">
+                <RefreshCw className="h-4 w-4" />
+              </Button>
+              <Button variant="ghost" size="sm">
+                <Bell className="h-4 w-4" />
+              </Button>
+              <Button variant="ghost" size="sm">
+                <Settings className="h-4 w-4" />
+              </Button>
+              <Button variant="ghost" size="sm">
+                <User className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.header>
+  );
+};
+
+const QuickStats = () => {
+  const stats = [
+    { label: "Total Services", value: "5", icon: Zap, color: "text-blue-500" },
+    { label: "Active Alerts", value: "3", icon: Bell, color: "text-red-500" },
+    { label: "SLOs Breaching", value: "1", icon: Shield, color: "text-yellow-500" },
+    { label: "Uptime", value: "99.2%", icon: Activity, color: "text-green-500" },
+  ];
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.4 }}
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8"
+    >
+      {stats.map((stat, index) => (
+        <motion.div
+          key={stat.label}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
+          whileHover={{ scale: 1.05 }}
+          className="bg-card border border-border/50 rounded-lg p-4 flex items-center gap-3"
+        >
+          <div className={`p-2 rounded-full bg-current/10 ${stat.color}`}>
+            <stat.icon className={`h-4 w-4 ${stat.color}`} />
+          </div>
+          <div>
+            <div className="text-2xl font-bold">{stat.value}</div>
+            <div className="text-xs text-muted-foreground">{stat.label}</div>
+          </div>
+        </motion.div>
+      ))}
+    </motion.div>
+  );
+};
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className="min-h-screen bg-background">
+      <Header />
+      
+      <main className="container mx-auto px-6 py-8">
+        <QuickStats />
+        
+        {/* Main Dashboard Grid */}
+        <div className="space-y-8">
+          {/* Row 1: Service Health Overview (Full Width) */}
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <ServiceHealthOverview />
+          </motion.section>
+          
+          {/* Row 2: SLO Status and Dependency Map */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.8 }}
+            className="grid grid-cols-1 xl:grid-cols-2 gap-8"
           >
-            Read our docs
-          </a>
+            <SLOStatusDashboard />
+            <ServiceDependencyMap />
+          </motion.div>
+          
+          {/* Row 3: Real-time Metrics (Full Width) */}
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1.0 }}
+          >
+            <RealTimeMetricsChart />
+          </motion.section>
+          
+          {/* Row 4: Alert Status Feed (Full Width) */}
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1.2 }}
+          >
+            <AlertStatusFeed />
+          </motion.section>
         </div>
+        
+        {/* Footer */}
+        <motion.footer
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.4 }}
+          className="mt-12 pt-8 border-t border-border/50 text-center text-xs text-muted-foreground"
+        >
+          <p>AWS Observability Console • Real-time monitoring and insights</p>
+        </motion.footer>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }

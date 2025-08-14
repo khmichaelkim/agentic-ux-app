@@ -19,8 +19,8 @@ import {
 import { ServiceHealthOverview } from "@/components/dashboard/service-health-overview";
 import { SLOStatusDashboard } from "@/components/dashboard/slo-status-dashboard";
 import { InteractiveServiceMap } from "@/components/dashboard/interactive/interactive-service-map";
-import { RealTimeMetricsChart } from "@/components/dashboard/real-time-metrics-chart";
 import { AlertStatusFeed } from "@/components/dashboard/alert-status-feed";
+import AlertBanner from "@/components/dashboard/alert-banner";
 
 const Header = () => {
   return (
@@ -91,7 +91,6 @@ const Header = () => {
 const QuickStats = () => {
   const stats = [
     { label: "Total Services", value: "5", icon: Zap, color: "text-blue-500" },
-    { label: "Active Alerts", value: "3", icon: Bell, color: "text-red-500" },
     { label: "SLOs Breaching", value: "1", icon: Shield, color: "text-yellow-500" },
     { label: "Uptime", value: "99.2%", icon: Activity, color: "text-green-500" },
   ];
@@ -101,7 +100,7 @@ const QuickStats = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.4 }}
-      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8"
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8"
     >
       {stats.map((stat, index) => (
         <motion.div
@@ -129,6 +128,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <AlertBanner />
       
       <main className="container mx-auto px-6 py-8">
         <QuickStats />
@@ -155,20 +155,12 @@ export default function Home() {
             <InteractiveServiceMap />
           </motion.div>
           
-          {/* Row 3: Real-time Metrics (Full Width) */}
+          {/* Row 3: Alert Status Feed (Full Width) */}
           <motion.section
+            id="alert-status-feed"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1.0 }}
-          >
-            <RealTimeMetricsChart />
-          </motion.section>
-          
-          {/* Row 4: Alert Status Feed (Full Width) */}
-          <motion.section
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.2 }}
           >
             <AlertStatusFeed />
           </motion.section>

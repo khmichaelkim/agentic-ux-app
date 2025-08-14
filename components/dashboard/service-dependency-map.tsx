@@ -122,7 +122,7 @@ const ConnectionLine = ({
           dominantBaseline="central"
           className="text-[8px] fill-white font-medium"
         >
-          {connection.errorRate.toFixed(1)}%
+          {Math.round(connection.errorRate)}%
         </text>
       </motion.g>
     </motion.svg>

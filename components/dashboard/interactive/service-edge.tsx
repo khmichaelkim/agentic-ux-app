@@ -31,11 +31,11 @@ const ServiceEdge = memo(({
   });
 
   // Dynamic styling based on health and type
-  const isHealthy = data.errorRate < 1;
+  const isHealthy = (data?.errorRate || 0) < 1;
   const strokeColor = isHealthy ? '#10b981' : 
-                     data.errorRate > 5 ? '#ef4444' : '#f59e0b';
-  const strokeWidth = data.type === 'sync' ? 3 : 2;
-  const strokeDasharray = data.type === 'sync' ? '0' : '8 4';
+                     (data?.errorRate || 0) > 5 ? '#ef4444' : '#f59e0b';
+  const strokeWidth = data?.type === 'sync' ? 3 : 2;
+  const strokeDasharray = data?.type === 'sync' ? '0' : '8 4';
   
   // Enhanced styling for selection
   const effectiveStrokeWidth = selected ? strokeWidth + 1 : strokeWidth;
@@ -113,7 +113,7 @@ const ServiceEdge = memo(({
           <div className="flex items-center gap-2">
             {/* Error rate badge */}
             <Badge 
-              variant={isHealthy ? "default" : data.errorRate > 5 ? "destructive" : "secondary"}
+              variant={isHealthy ? "default" : (data?.errorRate || 0) > 5 ? "destructive" : "secondary"}
               className="text-xs px-2 py-1 font-medium shadow-lg backdrop-blur-sm"
               style={{
                 backgroundColor: `${strokeColor}20`,
@@ -121,7 +121,7 @@ const ServiceEdge = memo(({
                 color: strokeColor
               }}
             >
-              {Math.round(data.errorRate)}% errors
+              {Math.round(data?.errorRate || 0)}% errors
             </Badge>
             
             {/* Latency badge */}
@@ -129,7 +129,7 @@ const ServiceEdge = memo(({
               variant="outline" 
               className="text-xs px-2 py-1 bg-background/80 backdrop-blur-sm shadow-lg"
             >
-              {data.latency}ms
+              {Math.round(data?.latency || 0)}ms
             </Badge>
             
             {/* Connection type indicator */}
@@ -137,20 +137,20 @@ const ServiceEdge = memo(({
               variant="outline" 
               className="text-xs px-2 py-1 bg-background/80 backdrop-blur-sm shadow-lg"
             >
-              {data.type}
+              {data?.type || 'sync'}
             </Badge>
           </div>
         </motion.div>
       </EdgeLabelRenderer>
 
       {/* Animated flow particles for sync connections */}
-      {data.type === 'sync' && (
+      {data?.type === 'sync' && (
         <motion.circle
           r="3"
           fill={strokeColor}
           className="pointer-events-none"
         >
-          <motion.animateMotion
+          <animateMotion
             dur="3s"
             repeatCount="indefinite"
             path={edgePath}
@@ -159,7 +159,7 @@ const ServiceEdge = memo(({
       )}
 
       {/* Pulse effect for async connections */}
-      {data.type === 'async' && (
+      {data?.type === 'async' && (
         <motion.circle
           cx={labelX}
           cy={labelY}

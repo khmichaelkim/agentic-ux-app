@@ -101,14 +101,14 @@ const ServiceNode = memo(({ data, selected }: NodeProps<ServiceNodeData>) => {
           <div className="flex justify-between items-center text-xs">
             <span className="text-muted-foreground">P99:</span>
             <span className="font-medium">
-              {data.latencyP99}ms
+              {Math.round(data.latencyP99)}ms
             </span>
           </div>
           
           <div className="flex justify-between items-center text-xs">
             <span className="text-muted-foreground">RPS:</span>
             <span className="font-medium">
-              {data.throughput}
+              {Math.round(data.throughput)}
             </span>
           </div>
         </div>

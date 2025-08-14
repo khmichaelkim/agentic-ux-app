@@ -18,6 +18,7 @@ import ReactFlow, {
   EdgeChange,
   SelectionMode,
   useOnSelectionChange,
+  ConnectionMode,
 } from "reactflow";
 import "reactflow/dist/style.css";
 import { motion } from "framer-motion";
@@ -44,7 +45,7 @@ import {
 } from "lucide-react";
 
 import ServiceNode from "./service-node";
-import ServiceEdge from "./service-edge";
+import ServiceEdge, { ServiceEdgeData } from "./service-edge";
 import { 
   convertToReactFlow, 
   applyLayout, 
@@ -217,11 +218,11 @@ function InteractiveServiceMapContent() {
       setEdges(edges =>
         edges.map(edge => ({
           ...edge,
-          data: {
+          data: edge.data ? {
             ...edge.data,
             errorRate: Math.max(0, edge.data.errorRate + (Math.random() - 0.5) * 0.3),
             latency: Math.max(0, edge.data.latency + (Math.random() - 0.5) * 50),
-          }
+          } : edge.data
         }))
       );
     }, 3000);
@@ -233,7 +234,7 @@ function InteractiveServiceMapContent() {
   const stats = useMemo(() => {
     const totalServices = nodes.length;
     const totalConnections = edges.length;
-    const avgLatency = edges.reduce((sum, edge) => sum + edge.data.latency, 0) / edges.length || 0;
+    const avgLatency = edges.reduce((sum, edge) => sum + (edge.data?.latency || 0), 0) / edges.length || 0;
     const healthyServices = nodes.filter(node => node.data.status === 'healthy').length;
     
     return {
@@ -255,7 +256,7 @@ function InteractiveServiceMapContent() {
         onConnect={onConnect}
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
-        connectionMode="loose"
+        connectionMode={ConnectionMode.Loose}
         fitView
         attributionPosition="bottom-left"
         selectionMode={SelectionMode.Partial}

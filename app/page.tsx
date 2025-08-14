@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -12,7 +13,8 @@ import {
   Activity,
   Cloud,
   Shield,
-  Zap
+  Zap,
+  Beaker
 } from "lucide-react";
 
 // Import our dashboard widgets
@@ -68,6 +70,11 @@ const Header = () => {
             <Separator orientation="vertical" className="h-6" />
             
             <div className="flex items-center gap-1">
+              <Link href="/test-aws">
+                <Button variant="ghost" size="sm" title="AWS Test Page">
+                  <Beaker className="h-4 w-4 text-green-500" />
+                </Button>
+              </Link>
               <Button variant="ghost" size="sm">
                 <RefreshCw className="h-4 w-4" />
               </Button>

@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-sdk/client-application-signals": "^3.864.0",
+    "@aws-sdk/credential-provider-node": "^3.864.0",
     "@radix-ui/react-progress": "^1.1.7",
     "@radix-ui/react-separator": "^1.1.7",
     "@radix-ui/react-slot": "^1.2.3",

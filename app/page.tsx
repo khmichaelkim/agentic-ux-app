@@ -14,7 +14,8 @@ import {
   Cloud,
   Shield,
   Zap,
-  Beaker
+  Beaker,
+  Bot
 } from "lucide-react";
 
 // Import our dashboard widgets
@@ -70,6 +71,11 @@ const Header = () => {
             <Separator orientation="vertical" className="h-6" />
             
             <div className="flex items-center gap-1">
+              <Link href="/agent">
+                <Button variant="ghost" size="sm" title="Agent Chat">
+                  <Bot className="h-4 w-4 text-blue-500" />
+                </Button>
+              </Link>
               <Link href="/test-aws">
                 <Button variant="ghost" size="sm" title="AWS Test Page">
                   <Beaker className="h-4 w-4 text-green-500" />

@@ -15,7 +15,8 @@ import {
   Shield,
   Zap,
   Beaker,
-  Bot
+  Bot,
+  Target
 } from "lucide-react";
 
 // Import our dashboard widgets
@@ -71,6 +72,11 @@ const Header = () => {
             <Separator orientation="vertical" className="h-6" />
             
             <div className="flex items-center gap-1">
+              <Link href="/slos">
+                <Button variant="ghost" size="sm" title="SLO Dashboard">
+                  <Target className="h-4 w-4 text-purple-500" />
+                </Button>
+              </Link>
               <Link href="/agent">
                 <Button variant="ghost" size="sm" title="Agent Chat">
                   <Bot className="h-4 w-4 text-blue-500" />

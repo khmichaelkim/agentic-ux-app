@@ -140,6 +140,50 @@ export const mockSLOs: SLOStatus[] = [
     status: 'meeting',
     remainingBudget: 85,
     lastBreach: null
+  },
+  {
+    id: 'rewards-service-availability',
+    name: 'Rewards Service Availability',
+    service: 'Rewards Service',
+    type: 'availability',
+    target: 99.9,
+    current: 99.95,
+    status: 'meeting',
+    remainingBudget: 92,
+    lastBreach: null
+  },
+  {
+    id: 'rewards-service-latency', 
+    name: 'Rewards Service Latency',
+    service: 'Rewards Service',
+    type: 'latency',
+    target: 500,
+    current: 420,
+    status: 'meeting',
+    remainingBudget: 78,
+    lastBreach: null
+  },
+  {
+    id: 'data-generator-availability',
+    name: 'Data Generator Availability', 
+    service: 'Data Generator',
+    type: 'availability',
+    target: 99.0,
+    current: 99.98,
+    status: 'meeting',
+    remainingBudget: 95,
+    lastBreach: null
+  },
+  {
+    id: 'transaction-service-latency',
+    name: 'Transaction Service Latency',
+    service: 'Transaction Service',
+    type: 'latency',
+    target: 800,
+    current: 1250,
+    status: 'at_risk',
+    remainingBudget: 35,
+    lastBreach: null
   }
 ];
 
